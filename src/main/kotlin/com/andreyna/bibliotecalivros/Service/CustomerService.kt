@@ -1,47 +1,43 @@
 package com.andreyna.bibliotecalivros.Service
 
 import org.springframework.stereotype.Service
-import com.andreyna.bibliotecalivros.Controller.Request.PostCustomerRequest
-import com.andreyna.bibliotecalivros.Controller.Request.PutCustomerRequest
 import com.andreyna.bibliotecalivros.Model.CustomerModel
+import com.andreyna.bibliotecalivros.Repository.CustomerRepository
 
 @Service
-class CustomerService {
-    val customers = mutableListOf<CustomerModel>()
+class CustomerService (val customerRepository: CustomerRepository) {
 
     fun getFilterCustomer(name: String?): List<CustomerModel> {
-        name?.let { return customers.filter { it.name.contains(name, true) } } //Se não for nulo, let então eu quero que rode
-        // filtrando os customers que contenham o nome selecionado e que deve ser ignorado Maiusculas de minusculas.
+        name?.let {
+            return customerRepository.findByNameContaining(name)
+        } //Se não for nulo, let então eu quero que rode
 
-        return customers
+        return customerRepository.findAll().toList()
     }
 
     fun getCustomerById(id: Int): CustomerModel {
-        return customers.filter { it.id == id }.first()
+        return customerRepository.findById(id).orElseThrow() // Se não tiver dados inputa uma execpetion
     }
 
-    fun createCustomer(customer: PostCustomerRequest) { // Quero que a request venha do Body e receba os dados do CustomerModel
-        val id = if (customers.isEmpty()) {
-            1
-        } else {
-            customers.last().id!! + 1
-        }
-
-        customers.add(CustomerModel(id, customer.name, customer.email)) // Lista adiciona esse novo customer model
+    fun createCustomer(customer: CustomerModel) { // Quero que a request venha do Body e receba os dados do CustomerModel
+        customerRepository.save(customer)
     }
 
-    fun updateCustomer(id: Int, customer: PutCustomerRequest): PutCustomerRequest {
-        customers.filter { it.id == id }.first().let {
-            it.name = customer.name
-            it.email = customer.email
+    fun updateCustomer(id: Int, customer: CustomerModel) {
+
+        if(!customerRepository.existsById(customer.id!!)) {
+            throw Exception()
         }
 
-        return customer
+        customerRepository.save(customer) // Para criar e atualizar ambos usam save, mas tem que fazer uma validaçao antes
     }
 
     fun deleteCustomer(id: Int): String { // :String significa o tipo de retorno que eu daria
-        customers.removeIf { it.id == id }
+        if(!customerRepository.existsById(id)) {
+            throw Exception()
+        }
 
+        customerRepository.deleteById(id)
         return "Deletado com sucesso"
     }
 }
