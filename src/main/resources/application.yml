@@ -3,6 +3,6 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/biblioteca-livros?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/bibliotecaLivros?createDatabaseIfNotExist=true
     username: root
     password: admin123
