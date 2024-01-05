@@ -1,7 +1,5 @@
 package com.andreyna.bibliotecalivros.Controller
 
-import com.andreyna.bibliotecalivros.Controller.Request.PostCustomerRequest
-import com.andreyna.bibliotecalivros.Controller.Request.PutCustomerRequest
 import com.andreyna.bibliotecalivros.Model.CustomerModel
 import com.andreyna.bibliotecalivros.Service.CustomerService
 import org.springframework.http.HttpStatus
@@ -32,14 +30,14 @@ class CustomerController(val customerService: CustomerService) { // Assim o Spri
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // Mudo o status de sucesso 200 para created 201
-    fun createCustomer(@RequestBody customer: PostCustomerRequest) { // Quero que a request venha do Body e receba os dados do CustomerModel
+    fun createCustomer(@RequestBody customer: CustomerModel) { // Quero que a request venha do Body e receba os dados do CustomerModel
         customerService.createCustomer(customer)
     }
 
     @PutMapping("/{id}") // Dá um update de Acordo com o Id
     @ResponseStatus(HttpStatus.NO_CONTENT) // Mudo o status de sucesso 200 para no content 204
-    fun updateCustomer(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest): PutCustomerRequest {
-        return customerService.updateCustomer(id, customer)
+        fun updateCustomer(@PathVariable id: Int, @RequestBody customer: CustomerModel) {
+         customerService.updateCustomer(id, customer)
     }
 
     @DeleteMapping("/{id}") // Dá um delete de Acordo com o Id
