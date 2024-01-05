@@ -5,7 +5,7 @@ import com.andreyna.bibliotecalivros.Model.CustomerModel
 import com.andreyna.bibliotecalivros.Repository.CustomerRepository
 
 @Service
-class CustomerService (val customerRepository: CustomerRepository) {
+class CustomerService (val customerRepository: CustomerRepository, val bookService: BookService) {
 
     fun getFilterCustomer(name: String?): List<CustomerModel> {
         name?.let {
@@ -33,11 +33,11 @@ class CustomerService (val customerRepository: CustomerRepository) {
     }
 
     fun deleteCustomer(id: Int): String { // :String significa o tipo de retorno que eu daria
-        if(!customerRepository.existsById(id)) {
-            throw Exception()
-        }
+        val customer = getCustomerById(id)
 
+        bookService.deleteByCustomer(customer)
         customerRepository.deleteById(id)
+
         return "Deletado com sucesso"
     }
 }
