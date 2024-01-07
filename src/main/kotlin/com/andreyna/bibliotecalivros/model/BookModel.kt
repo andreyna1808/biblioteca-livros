@@ -1,4 +1,4 @@
-package com.andreyna.bibliotecalivros.Model
+package com.andreyna.bibliotecalivros.model
 
 import com.andreyna.bibliotecalivros.enums.BookStatus
 import com.andreyna.bibliotecalivros.enums.Errors

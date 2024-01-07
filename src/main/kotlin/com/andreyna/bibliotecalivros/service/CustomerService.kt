@@ -1,8 +1,8 @@
-package com.andreyna.bibliotecalivros.Service
+package com.andreyna.bibliotecalivros.service
 
 import org.springframework.stereotype.Service
-import com.andreyna.bibliotecalivros.Model.CustomerModel
-import com.andreyna.bibliotecalivros.Repository.CustomerRepository
+import com.andreyna.bibliotecalivros.model.CustomerModel
+import com.andreyna.bibliotecalivros.repository.CustomerRepository
 import com.andreyna.bibliotecalivros.enums.CustomerStatus
 import com.andreyna.bibliotecalivros.enums.Errors
 import com.andreyna.bibliotecalivros.exception.Request.NotFoundException

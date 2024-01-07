@@ -1,9 +1,9 @@
-package com.andreyna.bibliotecalivros.Service
+package com.andreyna.bibliotecalivros.service
 
-import com.andreyna.bibliotecalivros.Model.BookModel
-import com.andreyna.bibliotecalivros.Model.CustomerModel
+import com.andreyna.bibliotecalivros.model.BookModel
+import com.andreyna.bibliotecalivros.model.CustomerModel
 import org.springframework.stereotype.Service
-import com.andreyna.bibliotecalivros.Repository.BookRepository
+import com.andreyna.bibliotecalivros.repository.BookRepository
 import com.andreyna.bibliotecalivros.enums.BookStatus
 import com.andreyna.bibliotecalivros.enums.Errors
 import com.andreyna.bibliotecalivros.exception.Request.NotFoundException
@@ -20,6 +20,10 @@ class BookService (val bookRepository: BookRepository) {
 
     fun getBookById(id: Int): BookModel {
         return bookRepository.findById(id).orElseThrow{ NotFoundException(Errors.B001.message.format(id), Errors.B001.code) }
+    }
+
+    fun getAllByIds(bookIds: List<Int>): List<BookModel> {
+        return bookRepository.findAllById(bookIds).toList()
     }
 
     /* POST */
@@ -52,6 +56,12 @@ class BookService (val bookRepository: BookRepository) {
             book.status = BookStatus.DELETADO
         }
 
+        bookRepository.saveAll(books)
+    }
+
+    /* OTHERS */
+    fun purchase(books: MutableList<BookModel>) {
+        books.map { it.status = BookStatus.VENDIDO }
         bookRepository.saveAll(books)
     }
 }

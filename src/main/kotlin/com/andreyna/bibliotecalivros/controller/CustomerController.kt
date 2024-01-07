@@ -1,7 +1,7 @@
-package com.andreyna.bibliotecalivros.Controller
+package com.andreyna.bibliotecalivros.controller
 
-import com.andreyna.bibliotecalivros.Model.CustomerModel
-import com.andreyna.bibliotecalivros.Service.CustomerService
+import com.andreyna.bibliotecalivros.model.CustomerModel
+import com.andreyna.bibliotecalivros.service.CustomerService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
