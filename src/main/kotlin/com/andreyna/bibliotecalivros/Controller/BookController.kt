@@ -3,6 +3,9 @@ package com.andreyna.bibliotecalivros.Controller
 import com.andreyna.bibliotecalivros.Model.BookModel
 import com.andreyna.bibliotecalivros.Service.BookService
 import com.andreyna.bibliotecalivros.Service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,8 +24,8 @@ class BookController(val bookService: BookService, val customerService: Customer
 
     /* GET */
     @GetMapping
-    fun getFilterBook(@RequestParam name: String?): List<BookModel> {
-       return bookService.getFilterBook(name)
+    fun getFilterBook(@RequestParam name: String?, @PageableDefault(page = 1, size = 10) pageable: Pageable): Page<BookModel> {
+       return bookService.getAllBooks(pageable)
     }
 
     @GetMapping("/{id}")

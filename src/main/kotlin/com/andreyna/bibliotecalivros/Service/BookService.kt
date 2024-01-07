@@ -5,17 +5,15 @@ import com.andreyna.bibliotecalivros.Model.CustomerModel
 import org.springframework.stereotype.Service
 import com.andreyna.bibliotecalivros.Repository.BookRepository
 import com.andreyna.bibliotecalivros.enums.BookStatus
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @Service
 class BookService (val bookRepository: BookRepository) {
 
     /* GET */
-    fun getFilterBook(name: String?): List<BookModel> {
-        name?.let {
-            return bookRepository.findByNameContaining(name)
-        }
-
-        return bookRepository.findAll().toList()
+    fun getAllBooks(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findAll(pageable)
     }
 
     fun getBookById(id: Int): BookModel {
