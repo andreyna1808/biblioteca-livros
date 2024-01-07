@@ -1,6 +1,8 @@
 package com.andreyna.bibliotecalivros.Model
 
 import com.andreyna.bibliotecalivros.enums.BookStatus
+import com.andreyna.bibliotecalivros.enums.Errors
+import com.andreyna.bibliotecalivros.exception.Request.BadRequestException
 import jakarta.persistence.*
 import java.math.BigDecimal
 
@@ -25,8 +27,8 @@ data class BookModel (
     @Enumerated(EnumType.STRING) // Esse cara é um enum que recebe valor especifico
     var status: BookStatus? = BookStatus.ATIVO // Só aceita valores já pre-definido pelo enum que eu criei
         set(value) {
-            if (field == BookStatus.DELETADO || field == BookStatus.ATIVO) {
-                throw Exception("Não é possível alterar um livro com status ${field}")
+            if (field == BookStatus.DELETADO || field == BookStatus.CANCELADO) {
+                throw BadRequestException(Errors.B101.message.format(field), Errors.B101.code)
             }
             field = value
         }
