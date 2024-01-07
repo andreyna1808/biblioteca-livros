@@ -24,7 +24,7 @@ class CustomerController(val customerService: CustomerService) { // Assim o Spri
     }
 
     @GetMapping("/{id}") // Dá um get de Acordo com o Id
-    fun getCustomerById(@PathVariable id: Int): CustomerModel {
+    fun getCustomerById(@PathVariable id: Int): CustomerModel { // TODO Não é recomendado que retorne o Model para o usuário, deveriamos fazer um response
         return customerService.getCustomerById(id)
     }
 
