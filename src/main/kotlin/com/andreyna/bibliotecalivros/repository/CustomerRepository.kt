@@ -1,6 +1,6 @@
-package com.andreyna.bibliotecalivros.Repository
+package com.andreyna.bibliotecalivros.repository
 
-import com.andreyna.bibliotecalivros.Model.CustomerModel
+import com.andreyna.bibliotecalivros.model.CustomerModel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.CrudRepository

@@ -1,11 +1,9 @@
-package com.andreyna.bibliotecalivros.Model
+package com.andreyna.bibliotecalivros.model
 
-import com.andreyna.bibliotecalivros.enums.BookStatus
 import com.andreyna.bibliotecalivros.enums.CustomerStatus
 import com.andreyna.bibliotecalivros.enums.Errors
 import com.andreyna.bibliotecalivros.exception.Request.BadRequestException
 import jakarta.persistence.*
-import java.math.BigDecimal
 
 @Entity(name = "customers") // Faz referência a tabela do banco de dados
 data class CustomerModel (
