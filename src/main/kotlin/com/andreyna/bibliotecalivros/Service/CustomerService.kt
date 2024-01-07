@@ -3,6 +3,7 @@ package com.andreyna.bibliotecalivros.Service
 import org.springframework.stereotype.Service
 import com.andreyna.bibliotecalivros.Model.CustomerModel
 import com.andreyna.bibliotecalivros.Repository.CustomerRepository
+import com.andreyna.bibliotecalivros.enums.CustomerStatus
 
 @Service
 class CustomerService (val customerRepository: CustomerRepository, val bookService: BookService) {
@@ -15,7 +16,7 @@ class CustomerService (val customerRepository: CustomerRepository, val bookServi
         return customerRepository.findAll().toList()
     }
 
-    fun getCustomerById(id: Int): CustomerModel {
+    fun getCustomerById(id: Int): CustomerModel { // :CustomerModel significa o tipo de retorno que eu daria
         return customerRepository.findById(id).orElseThrow() // Se não tiver dados inputa uma execpetion
     }
 
@@ -32,12 +33,10 @@ class CustomerService (val customerRepository: CustomerRepository, val bookServi
         customerRepository.save(customer) // Para criar e atualizar ambos usam save, mas tem que fazer uma validaçao antes
     }
 
-    fun deleteCustomer(id: Int): String { // :String significa o tipo de retorno que eu daria
+    fun deleteCustomer(id: Int) {
         val customer = getCustomerById(id)
 
         bookService.deleteByCustomer(customer)
-        customerRepository.deleteById(id)
-
-        return "Deletado com sucesso"
+        customer.status = CustomerStatus.INATIVO
     }
 }

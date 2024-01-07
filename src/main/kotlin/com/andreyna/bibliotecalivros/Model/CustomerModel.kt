@@ -1,10 +1,7 @@
 package com.andreyna.bibliotecalivros.Model
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import com.andreyna.bibliotecalivros.enums.CustomerStatus
+import jakarta.persistence.*
 
 @Entity(name = "customers") // Faz referência a tabela do banco de dados
 data class CustomerModel (
@@ -17,4 +14,10 @@ data class CustomerModel (
     var name: String,
 
     @Column // É uma coluna da tabel customers do banco de dados
-    var email: String)
+    var email: String,
+
+    @Column // É uma coluna da tabel customers do banco de dados
+    @Enumerated(EnumType.STRING)
+    var status: CustomerStatus? = CustomerStatus.ATIVO
+
+)
