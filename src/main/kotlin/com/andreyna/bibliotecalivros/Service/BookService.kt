@@ -5,6 +5,8 @@ import com.andreyna.bibliotecalivros.Model.CustomerModel
 import org.springframework.stereotype.Service
 import com.andreyna.bibliotecalivros.Repository.BookRepository
 import com.andreyna.bibliotecalivros.enums.BookStatus
+import com.andreyna.bibliotecalivros.enums.Errors
+import com.andreyna.bibliotecalivros.exception.Request.NotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 
@@ -17,7 +19,7 @@ class BookService (val bookRepository: BookRepository) {
     }
 
     fun getBookById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id).orElseThrow{ NotFoundException(Errors.B001.message.format(id), Errors.B001.code) }
     }
 
     /* POST */
@@ -29,7 +31,7 @@ class BookService (val bookRepository: BookRepository) {
     fun updateBook(id: Int, book: BookModel) {
 
         if(!bookRepository.existsById(book.id!!)) {
-            throw Exception()
+            throw Exception( NotFoundException(Errors.B001.message.format(id), Errors.B001.code) )
         }
 
         bookRepository.save(book)
