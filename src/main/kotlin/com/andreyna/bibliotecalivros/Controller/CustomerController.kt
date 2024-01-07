@@ -42,7 +42,7 @@ class CustomerController(val customerService: CustomerService) { // Assim o Spri
 
     @DeleteMapping("/{id}") // Dá um delete de Acordo com o Id
     @ResponseStatus(HttpStatus.NO_CONTENT) // Mudo o status de sucesso 200 para no content 204
-    fun deleteCustomer(@PathVariable id: Int): String { // :String significa o tipo de retorno que eu daria
-        return customerService.deleteCustomer(id)
+    fun deleteCustomer(@PathVariable id: Int) {
+        customerService.deleteCustomer(id)
     }
 }
