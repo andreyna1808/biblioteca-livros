@@ -4,16 +4,18 @@ import org.springframework.stereotype.Service
 import com.andreyna.bibliotecalivros.Model.CustomerModel
 import com.andreyna.bibliotecalivros.Repository.CustomerRepository
 import com.andreyna.bibliotecalivros.enums.CustomerStatus
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 
 @Service
 class CustomerService (val customerRepository: CustomerRepository, val bookService: BookService) {
 
-    fun getFilterCustomer(name: String?): List<CustomerModel> {
+    fun getFilterCustomer(name: String?, pageable: Pageable): Page<CustomerModel> {
         name?.let {
-            return customerRepository.findByNameContaining(name)
+            return customerRepository.findByNameContaining(name, pageable)
         } //Se não for nulo, let então eu quero que rode
 
-        return customerRepository.findAll().toList()
+        return customerRepository.findAll(pageable)
     }
 
     fun getCustomerById(id: Int): CustomerModel { // :CustomerModel significa o tipo de retorno que eu daria
