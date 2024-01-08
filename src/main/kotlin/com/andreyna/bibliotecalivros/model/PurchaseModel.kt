@@ -1,11 +1,11 @@
 package com.andreyna.bibliotecalivros.model
 
-import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import javax.persistence.*
 
-@Entity(name = "purchases")
-data class PurchaseModel (
+@Entity(name = "purchase")
+data class PurchaseModel(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,18 +16,17 @@ data class PurchaseModel (
     val customer: CustomerModel,
 
     @ManyToMany
-    @JoinTable(name = "purchase_books",
+    @JoinTable(name = "purchase_book",
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")])
     val books: MutableList<BookModel>,
 
     @Column
-    val price: BigDecimal,
+    val nfe: String? = null,
 
     @Column
-    val nfe: String? = null,
+    val price: BigDecimal,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now()
-
 )
